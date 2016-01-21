@@ -1604,6 +1604,8 @@ def _score(estimator, X_test, y_test, scorer):
         score = scorer(estimator, X_test)
     else:
         score = scorer(estimator, X_test, y_test)
+    if isinstance(score, np.core.memmap):
+        score = np.float(score)
     if not isinstance(score, numbers.Number):
         raise ValueError("scoring must return a number, got %s (%s) instead."
                          % (str(score), type(score)))
